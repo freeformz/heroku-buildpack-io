@@ -39,8 +39,6 @@ cache_target=${cache}/${io_file}
 build_target=${build}/.local
 target=/app/.local
 
-rm -f ${cache_target}
-
 if [ ! -f ${cache_target} ]; then
   echo "No cached compile detected. Bulding..." | indent
   cd $build
