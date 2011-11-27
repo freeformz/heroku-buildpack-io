@@ -8,17 +8,9 @@ indent() {
 
 build=$1
 cache=$2
-#ensure
+
+#ensure it exists
 mkdir -p ${cache}
-
-echo "pwd contents"
-ls -al
-
-echo "build (${build}) contents"
-ls -al ${build}
-
-echo "cache (${cache}) contents"
-ls -al ${cache}
 
 io_version="2011.09.12"
 io_tar_dir="stevedekorte-io-23afbcc/"

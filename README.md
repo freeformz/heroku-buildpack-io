@@ -15,6 +15,10 @@ url is https://github.com/freeformz/heroku-buildpack-io.git
 # gem install heroku
 # heroku create -s cedar --buildpack https://github.com/freeformz/heroku-buildpack-io.git
 
+# NOTES
+- Detects a 'main.io' file
+- Default Profile entry assumes 'main.io' exists and just runs 'io'
+
 # TODO
 - don't cache cmake, just make it when necessary and throw it away
 - use a cached install from S3, instead of building.
