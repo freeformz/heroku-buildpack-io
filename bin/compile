@@ -23,25 +23,46 @@ cmake_url="http://www.cmake.org/files/v2.8/cmake-2.8.6.tar.gz"
 cmake_file="cmake-${cmake_version}.tar.gz"
 cmake_tar_dir="cmake-${cmake_version}"
 
+libe_version="2.0.16"
+libe_dir="libevent-${libe_version}-stable"
+libe_file="${libe_dir}.tar.gz"
+libe_url="http://cloud.github.com/downloads/libevent/libevent/${libe_file}"
+
 cache_target=${cache}/${io_file}
-target=${build}/.local
+build_target=${build}/.local
+target=/app/.local
 
 if [ ! -f ${cache_target} ]; then
+  #Compile cmake
   curl ${cmake_url} > ${cmake_file}
   tar zxf ${cmake_file}
   cd ${cmake_tar_dir}
   ./bootstrap --prefix=${target} && make && make install
   PATH=${target}/.local/bin:$PATH
+  cd ..
+
+  #Compile libevent
+  curl ${libe_url} > ${libe_file}
+  tar zxf ${libe_file}
+  cd ${libe_dir}
+  ./configure --prefix=${target}
+  make install
+  cd ..
+
+  #Compile IO
   curl ${io_url} > ${io_file}
   tar zxf ${io_file}
   cd ${io_tar_dir}
   sed -i s/add_subdirectory\(Python\)/#add_subdirectory\(Python\)/ addons/CMakeLists.txt
   mkdir build
   cd build
-  cmake -DCMAKE_INSTALL_PREFIX=${target} -DCMAKE_BUILD_TYPE=release ..
+  cmake -DCMAKE_INSTALL_PREFIX=${target} -DCMAKE_FIND_ROOT_PATH=${target} -DCMAKE_BUILD_TYPE=release ..
   make install
+  cd ..
+
+  #Create cache slug
   tar czf ${cache_target} -C ${target} .
 fi
 
-mkdir -p ${target}
-tar xzf ${cache_target} -C ${target}
+mkdir -p ${build_target}
+tar xzf ${cache_target} -C ${build_target}
