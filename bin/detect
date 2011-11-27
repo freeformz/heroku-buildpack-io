@@ -1,0 +1,8 @@
+#!/bin/sh
+
+if [ -f $1/main.io ]; then
+  echo "IO Language"
+  exit 0
+else
+  exit 1
+fi
