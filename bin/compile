@@ -13,6 +13,8 @@ echo "build: ${build}"
 echo "cache: ${cache}"
 echo "pwd: $(pwd)"
 
+ls -al ${cache}
+
 io_version="2011.09.12"
 io_tar_dir="stevedekorte-io-23afbcc/"
 io_url="https://nodeload.github.com/stevedekorte/io/tarball/${io_version}"
