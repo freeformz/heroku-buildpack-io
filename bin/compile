@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -ex
+set -e
 
 indent() {
   sed -u 's/^/       /'
@@ -8,19 +8,16 @@ indent() {
 
 build=$1
 cache=$2
-
-echo "build: ${build}"
-echo "cache: ${cache}"
-echo "pwd: $(pwd)"
-
-#check
-ls -al ${build}
-echo "------"
-ls -al
-echo "------"
-
 #ensure
 mkdir -p ${cache}
+
+echo "pwd contents"
+ls -al
+
+echo "build (${build}) contents"
+ls -al ${build}
+
+echo "cache (${cache}) contents"
 ls -al ${cache}
 
 io_version="2011.09.12"
@@ -44,9 +41,11 @@ target=/app/.local
 
 rm -f ${cache_target}
 
-cd $build
-
 if [ ! -f ${cache_target} ]; then
+  echo "No cached compile detected. Bulding..." | indent
+  cd $build
+
+  echo "Compiling cmake v${cmake_version}..." | indent
   #Compile cmake
   curl -s ${cmake_url} > ${cmake_file}
   tar zxf ${cmake_file}
@@ -57,6 +56,7 @@ if [ ! -f ${cache_target} ]; then
   PATH=${target}/bin:$PATH
   cd ..
 
+  echo "Compiling libevent v${libe_version}..." | indent
   #Compile libevent
   curl -s ${libe_url} > ${libe_file}
   tar zxf ${libe_file}
@@ -65,6 +65,7 @@ if [ ! -f ${cache_target} ]; then
   make install | indent
   cd ..
 
+  echo "Compiling io v${io_version}..." | indent
   #Compile IO
   curl -s ${io_url} > ${io_file}
   tar zxf ${io_file}
