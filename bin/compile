@@ -44,6 +44,8 @@ target=/app/.local
 
 rm -f ${cache_target}
 
+cd $build
+
 if [ ! -f ${cache_target} ]; then
   #Compile cmake
   curl -s ${cmake_url} > ${cmake_file}
