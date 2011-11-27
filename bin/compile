@@ -13,8 +13,15 @@ echo "build: ${build}"
 echo "cache: ${cache}"
 echo "pwd: $(pwd)"
 
+#check
+ls -al ${build}
+echo "------"
+ls -al
+echo "------"
+
 #ensure
 mkdir -p ${cache}
+ls -al ${cache}
 
 io_version="2011.09.12"
 io_tar_dir="stevedekorte-io-23afbcc/"
