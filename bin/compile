@@ -32,13 +32,17 @@ cache_target=${cache}/${io_file}
 build_target=${build}/.local
 target=/app/.local
 
+rm -f ${cache_target}
+
 if [ ! -f ${cache_target} ]; then
   #Compile cmake
   curl ${cmake_url} > ${cmake_file}
   tar zxf ${cmake_file}
   cd ${cmake_tar_dir}
-  ./bootstrap --prefix=${target} && make && make install
-  PATH=${target}/.local/bin:$PATH
+  ./bootstrap --prefix=${target} | indent
+  make | indent
+  make install | indent
+  PATH=${target}/bin:$PATH
   cd ..
 
   #Compile libevent
