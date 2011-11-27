@@ -36,7 +36,7 @@ rm -f ${cache_target}
 
 if [ ! -f ${cache_target} ]; then
   #Compile cmake
-  curl ${cmake_url} > ${cmake_file}
+  curl -s ${cmake_url} > ${cmake_file}
   tar zxf ${cmake_file}
   cd ${cmake_tar_dir}
   ./bootstrap --prefix=${target} | indent
@@ -46,22 +46,22 @@ if [ ! -f ${cache_target} ]; then
   cd ..
 
   #Compile libevent
-  curl ${libe_url} > ${libe_file}
+  curl -s ${libe_url} > ${libe_file}
   tar zxf ${libe_file}
   cd ${libe_dir}
-  ./configure --prefix=${target}
-  make install
+  ./configure --prefix=${target} | indent
+  make install | indent
   cd ..
 
   #Compile IO
-  curl ${io_url} > ${io_file}
+  curl -s ${io_url} > ${io_file}
   tar zxf ${io_file}
   cd ${io_tar_dir}
   sed -i s/add_subdirectory\(Python\)/#add_subdirectory\(Python\)/ addons/CMakeLists.txt
   mkdir build
   cd build
-  cmake -DCMAKE_INSTALL_PREFIX=${target} -DCMAKE_FIND_ROOT_PATH=${target} -DCMAKE_BUILD_TYPE=release ..
-  make install
+  cmake -DCMAKE_INSTALL_PREFIX=${target} -DCMAKE_FIND_ROOT_PATH=${target} -DCMAKE_BUILD_TYPE=release .. | indent
+  make install | indent
   cd ..
 
   #Create cache slug
