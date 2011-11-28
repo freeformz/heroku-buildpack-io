@@ -1,9 +1,9 @@
 # What is this?
 
-Build Pack for the [IO Language](http://www.iolanguage.com/)
+Build Pack for the [Io Language](http://www.iolanguage.com/)
 
-The first push will suck because cmake, libevent  and IO needs to be compiled.
-After that it is cached, at least until the version of IO changes.
+The first push will suck because cmake, libevent and Io needs to be compiled.
+After that it is cached, at least until the version of Io changes.
 
 # How to use
 
